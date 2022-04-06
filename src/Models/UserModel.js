@@ -15,8 +15,8 @@ const UserModel = {
   is_superuser: PropTypes.bool.isRequired,
   is_staff: PropTypes.bool.isRequired,
   is_active: PropTypes.bool.isRequired,
-  student: PropTypes.number,
-  patient: PropTypes.number,
+  student: PropTypes.object,
+  patient: PropTypes.object,
 };
 
 export default UserModel;

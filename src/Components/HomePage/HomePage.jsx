@@ -1,3 +1,4 @@
+import './HomePage.css';
 import HomePatientMeetings from '../HomePatientMeetings/HomePatientMeetings';
 import HomeStudentContainer from '../HomeStudentContainer/HomeStudentContainer';
 import HomeStudentMeetings from '../HomeStudentMeetings/HomeStudentMeetings';

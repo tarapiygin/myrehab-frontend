@@ -3,8 +3,8 @@ import UserModel from '../../Models/UserModel';
 export default function HomeUserContainer(user) {
   console.log(user);
   return (
-    <div className="HomeUserContainer">
-      <h2 className="HomeUserContainer-title">Общая информация</h2>
+    <div className="HomeUserContainer commonFormContainer">
+      <h2 className="HomeUserContainer__title">Общая информация</h2>
     </div>
   );
 }
