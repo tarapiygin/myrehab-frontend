@@ -4,5 +4,5 @@ export default function HomeStudentContainer(props) {
     <div className="HomeStudentContainer">
       <h2 className="HomeStudentContainer-title">Профиль специалиста</h2>
     </div>
-  )
+  );
 }

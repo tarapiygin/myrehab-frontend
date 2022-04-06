@@ -4,5 +4,5 @@ export default function HomeStudentMeetings(props) {
     <div className="HomeStudentMeetings">
       <h2 className="HomeStudentMeetings-title">Записи моих пациентов</h2>
     </div>
-  )
+  );
 }

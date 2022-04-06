@@ -8,5 +8,5 @@ export default function HomePageMenu(props) {
       <button className="btn HomePageMenu-button" type="button">Записи к специалисту</button>
       {type === 'student' || <button className="btn HomePageMenu-button" type="button">Мои пациенты</button>}
     </div>
-  )
+  );
 }
