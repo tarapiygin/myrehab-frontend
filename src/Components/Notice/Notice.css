@@ -1,0 +1,98 @@
+.Notice {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  width: 320px;
+  z-index: 200000000;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: margin-top 1s, opacity 0.3s;
+}
+
+.Notice--visible {
+  visibility: visible;
+  margin-top: 50px;
+  opacity: 1;
+}
+
+.Notice__content {
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+  min-height: 50px;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 0 12px #999;
+  font: normal 16px Golos, Arial, sans-serif;
+  text-align: left;
+  color: #4a4a4a;
+  position: relative;
+  margin: 5px 0 10px;
+}
+
+.Notice__content--info:before {
+  content: '';
+  width: 12px;
+  background-color: #54d590;
+  position: absolute;
+  left: 0;
+  height: 100%;
+}
+
+.Notice__content--fail:before {
+  content: '';
+  width: 12px;
+  background-color: #e91e63;
+  position: absolute;
+  left: 0;
+  height: 100%;
+}
+
+.Notice__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  text-align: center;
+  text-decoration: none;
+  color: #aaa;
+  font-weight: 600;
+  font-size: 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  opacity: .5;
+  transition: .3s ease;
+  background: url(https://netology.ru/dist/public/images/close_23952f.svg) center no-repeat;
+  background-size: contain;
+}
+
+.Notice__body {
+  font-size: 14px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 5px 28px;
+}
+
+.Notice__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  z-index: 999;
+  opacity: 0.5;
+  -webkit-animation: track-progress linear 1;
+  animation: track-progress linear 1;
+}
