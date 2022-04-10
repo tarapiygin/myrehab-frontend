@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
-import StudentModel from './StudentModel';
-import PatientModel from './PatientModel';
 
 const UserModel = {
-  id: PropTypes.number,
-  email: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
   first_name: PropTypes.string,
   last_name: PropTypes.string,
   middle_name: PropTypes.string,
@@ -17,8 +15,6 @@ const UserModel = {
   is_superuser: PropTypes.bool,
   is_staff: PropTypes.bool,
   is_active: PropTypes.bool,
-  student: PropTypes.object,
-  patient: PropTypes.object,
 };
 
 export default UserModel;
