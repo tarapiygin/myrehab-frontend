@@ -1,0 +1,36 @@
+.HomePageMenu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px 40px;
+}
+
+.HomePageMenu__toggle {
+  background-color: #ffffff;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 10%);
+  box-sizing: border-box;
+  color: #364655;
+  font-weight: 400;
+  margin: 10px;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.HomePageMenu__toggle:focus, .HomePageMenu__toggle:active, .HomePageMenu__toggle:hover {
+  color: #7047c3;
+  border: 1px solid #7047c3;
+}
+
+.HomePageMenu__toggle--active {
+  background-color: #7047c3!important;
+  color: #ffffff!important;
+}
+
+
+@media (max-width: 767px) {
+  .HomePageMenu {
+    align-items: center;
+    flex-direction: column;
+  }
+}
