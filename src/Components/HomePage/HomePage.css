@@ -1,5 +1,16 @@
+.home {
+  background-color: #f6f8f9;
+  box-sizing: border-box;
+  padding-bottom: 150px;
+  padding-top: 100px;
+}
+
 .HomePage {
   max-width: 980px;
   margin-right: auto;
   margin-left: auto;
+}
+
+.HomePage__title{
+  text-align: center;
 }
