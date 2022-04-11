@@ -1,14 +1,12 @@
 /* eslint-disable max-len */
 import './AvatarLoader.css';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 import { avatarIsValid, resizeImage } from '../../utils';
 import NoticeContext from '../../context';
 import API from '../../API';
 
 export default function AvatarLoader({ avatarUrl, dispatchState }) {
   const noticeContext = useContext(NoticeContext);
-  const [stateAvatarUrl, setAvatarUrl] = useState(avatarUrl);
-  const [classNames, setClassNames] = useState({ container: 'AvatarLoader AvatarLoader--notInstaled', text: 'AvatarLoader__text' });
   const inputRef = useRef(null);
 
   const onChangeAvatar = (e) => {
@@ -18,9 +16,6 @@ export default function AvatarLoader({ avatarUrl, dispatchState }) {
       const { message, status } = avatarIsValid(img);
       if (status) {
         resizeImage(img, (smallFile) => {
-          const newAvatarUrl = URL.createObjectURL(smallFile);
-          setAvatarUrl(newAvatarUrl);
-          setClassNames(() => ({ container: 'AvatarLoader', text: 'AvatarLoader__text d-none' }));
           img.remove();
           updateAvatar(smallFile);
         });
@@ -48,9 +43,9 @@ export default function AvatarLoader({ avatarUrl, dispatchState }) {
   };
 
   return (
-    <div className={classNames.container} onClick={onClickContainer} style={{ backgroundImage: `url(${stateAvatarUrl})` }}>
+    <div className="AvatarLoader AvatarLoader--notInstaled" onClick={onClickContainer} style={{ backgroundImage: `url(${avatarUrl})` }}>
       <input className="AvatarLoader__input" ref={inputRef} onChange={onChangeAvatar} name="avatar" type="file" accept="image/*"/>
-      <span className={classNames.text}>
+      <span className="AvatarLoader__text">
         {!avatarUrl && 'Установите Ваше реальную фотографию'}
         {avatarUrl && 'Вы можете обновить фото профиля'}
       </span>

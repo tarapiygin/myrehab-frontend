@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import UserModel from '../../Models/UserModel';
 import AccountsMenu from '../AccountsMenu/AccountsMenu';

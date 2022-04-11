@@ -7,8 +7,20 @@ import HomeUserContainer from '../HomeUserContainer/HomeUserContainer';
 import HomePageMenu from '../HomePageMenu/HomePageMenu';
 
 export default function HomePage({
-  user, student, patient, studentMeetings, patientMeetings, dispatchState,
+  user,
+  student,
+  patient,
+  studentMeetings,
+  patientMeetings,
+  dispatchState,
 }) {
+  const components = {
+    user: <HomeUserContainer user={user} dispatchState={dispatchState}/>,
+    student: <HomeStudentContainer student={student}/>,
+    studentMeetings: <HomeStudentMeetings student={studentMeetings}/>,
+    patientMeetings: <HomePatientMeetings patient={patientMeetings}/>,
+  };
+
   const [activeComponent, setActiveComponent] = useState('user');
   const onToggleComponent = (type) => {
     setActiveComponent(type);
@@ -22,10 +34,7 @@ export default function HomePage({
         student={student}
         patient={patient}
         onToggleComponent={onToggleComponent}/>
-        { activeComponent === 'user' && <HomeUserContainer user={user} dispatchState={dispatchState}/>}
-        { activeComponent === 'student' && <HomeStudentContainer student={student}/>}
-        { activeComponent === 'studentMeetings' && studentMeetings.length > 0 && <HomeStudentMeetings student={studentMeetings}/>}
-        { activeComponent === 'patientMeetings' && patientMeetings.length > 0 && <HomePatientMeetings patient={patientMeetings}/>}
+        {components[activeComponent]}
       </div>
     </div>
   );
