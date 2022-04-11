@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import API from './API';
 import HomePage from './Components/HomePage/HomePage';
 import Notice from './Components/Notice/Notice';
