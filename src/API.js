@@ -1,7 +1,13 @@
 import { getCookie } from './utils';
 
-export const HREF = 'http://127.0.0.1/';
-export const ORIGIN = 'http://127.0.0.1';
+// eslint-disable-next-line import/no-mutable-exports
+let ORIGIN = window.origin;
+if (process.env.NODE_ENV === 'development') {
+  ORIGIN = 'http://127.0.0.1';
+}
+
+export { ORIGIN };
+
 const CALLS = [];
 export default class API {
   static async getResponse(adress, method = 'GET', body = undefined, exHeaders = {}) {
@@ -106,18 +112,18 @@ export default class API {
   //   return API.getResponse(adress, method, body);
   // }
 
-  static async getDataSearchForm() {
-    const url = new URL(HREF);
-    url.searchParams.set('format', 'JSON');
-    const response = await fetch(url.href);
-    try {
-      if (response.ok) {
-        const rowData = await response.json();
-        return rowData.data;
-      }
-      return {};
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
+  // static async getDataSearchForm() {
+  //   const url = new URL(HREF);
+  //   url.searchParams.set('format', 'JSON');
+  //   const response = await fetch(url.href);
+  //   try {
+  //     if (response.ok) {
+  //       const rowData = await response.json();
+  //       return rowData.data;
+  //     }
+  //     return {};
+  //   } catch (error) {
+  //     throw new Error(error.message);
+  //   }
+  // }
 }
