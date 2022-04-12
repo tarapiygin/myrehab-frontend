@@ -6,6 +6,7 @@ const UserModel = {
   first_name: PropTypes.string,
   last_name: PropTypes.string,
   middle_name: PropTypes.string,
+  full_name: PropTypes.string,
   phone: PropTypes.string,
   country: PropTypes.string,
   city: PropTypes.string,
