@@ -7,7 +7,7 @@ import InputFormGroup from '../../Base/InputFormGroup/InputFormGroup';
 import API, { ORIGIN } from '../../../API';
 import NoticeContext from '../../../context';
 
-export default function HomeUserContainer({ user, dispatchState }) {
+export default function HomeUserForm({ user, dispatchState }) {
   const noticeContext = useContext(NoticeContext);
   const formRef = useRef(null);
 
@@ -44,7 +44,7 @@ export default function HomeUserContainer({ user, dispatchState }) {
   );
 }
 
-HomeUserContainer.propTypes = {
+HomeUserForm.propTypes = {
   user: PropTypes.exact(UserModel),
   dispatchState: PropTypes.func,
 };
