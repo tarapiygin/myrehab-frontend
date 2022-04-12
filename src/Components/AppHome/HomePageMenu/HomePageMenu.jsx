@@ -15,9 +15,10 @@ export default function HomePageMenu({ student, patient, onToggleComponent }) {
 
   return (
     <div className="HomePageMenu" ref={refContainer}>
-      <button onClick={onClickButton} data-type='user' className="btn HomePageMenu__toggle HomePageMenu__toggle--active" type="button">Личный профиль</button>
+      <button onClick={onClickButton} data-type='user' className="btn HomePageMenu__toggle HomePageMenu__toggle--active" type="button">Мои данные</button>
       {student && <button onClick={onClickButton} data-type='student' className="btn HomePageMenu__toggle" type="button">Профиль специалиста</button>}
-      {student && <button onClick={onClickButton} data-type='studentMeetings' className="btn HomePageMenu__toggle" type="button">Мои пациенты</button>}
+      {student && <button onClick={onClickButton} data-type='studentPatients' className="btn HomePageMenu__toggle" type="button">Мои пациенты</button>}
+      {student && <button onClick={onClickButton} data-type='studentMeetings' className="btn HomePageMenu__toggle" type="button">Расписание приемов</button>}
       {patient && <button onClick={onClickButton} data-type='patientMeetings' className="btn HomePageMenu__toggle" type="button">Записи к специалисту</button>}
     </div>
   );

@@ -5,6 +5,7 @@ import HomeStudentForm from '../HomeStudentForm/HomeStudentForm';
 import HomeStudentMeetings from '../HomeStudentMeetings/HomeStudentMeetings';
 import HomeUserForm from '../HomeUserForm/HomeUserForm';
 import HomePageMenu from '../HomePageMenu/HomePageMenu';
+import HomeStudentPatients from '../HomeStudentPatients/HomeStudentPatients';
 
 export default function HomePage({
   user,
@@ -17,6 +18,7 @@ export default function HomePage({
   const components = {
     user: <HomeUserForm user={user} dispatchState={dispatchState}/>,
     student: <HomeStudentForm student={student}/>,
+    studentPatiens: <HomeStudentPatients patients={student.patients}/>,
     studentMeetings: <HomeStudentMeetings studentMeetings={studentMeetings}/>,
     patientMeetings: <HomePatientMeetings patientMeetings={patientMeetings}/>,
   };
@@ -28,13 +30,16 @@ export default function HomePage({
 
   return (
     <div className='home'>
-      <div className='HomePage container'>
+      <div className='HomePage'>
         <h1 className='HomePage__title'>Личный кабинет</h1>
+
         <HomePageMenu
         student={student}
         patient={patient}
         onToggleComponent={onToggleComponent}/>
+        <div className='container'>
         {components[activeComponent]}
+        </div>
       </div>
     </div>
   );

@@ -23,14 +23,44 @@
 }
 
 .HomePageMenu__toggle--active {
-  background-color: #7047c3!important;
-  color: #ffffff!important;
+  background-color: #7047c3 !important;
+  color: #ffffff !important;
 }
 
 
 @media (max-width: 767px) {
   .HomePageMenu {
-    align-items: center;
-    flex-direction: column;
+    overflow-x: auto;
+    width: 100%;
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+    justify-content: left;
+    -webkit-scrollbar: none;
+    scrollbar-color: red;
+  }
+
+  .HomePageMenu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .HomePageMenu__toggle {
+    white-space: nowrap;
+    margin: 0;
+    box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 10%);
+    margin-left: 7px;
+    margin-right: 7px;
+  }
+
+  .HomePageMenu__toggle:first-child {
+    margin-left: 14px;
+  }
+
+  .HomePageMenu__toggle:last-child {
+    margin-right: 14px;
   }
 }
