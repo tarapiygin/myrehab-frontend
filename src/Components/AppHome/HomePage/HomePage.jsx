@@ -1,9 +1,9 @@
 import './HomePage.css';
 import { useState } from 'react';
 import HomePatientMeetings from '../HomePatientMeetings/HomePatientMeetings';
-import HomeStudentContainer from '../HomeStudentContainer/HomeStudentContainer';
+import HomeStudentForm from '../HomeStudentForm/HomeStudentForm';
 import HomeStudentMeetings from '../HomeStudentMeetings/HomeStudentMeetings';
-import HomeUserContainer from '../HomeUserContainer/HomeUserContainer';
+import HomeUserForm from '../HomeUserForm/HomeUserForm';
 import HomePageMenu from '../HomePageMenu/HomePageMenu';
 
 export default function HomePage({
@@ -15,8 +15,8 @@ export default function HomePage({
   dispatchState,
 }) {
   const components = {
-    user: <HomeUserContainer user={user} dispatchState={dispatchState}/>,
-    student: <HomeStudentContainer student={student}/>,
+    user: <HomeUserForm user={user} dispatchState={dispatchState}/>,
+    student: <HomeStudentForm student={student}/>,
     studentMeetings: <HomeStudentMeetings studentMeetings={studentMeetings}/>,
     patientMeetings: <HomePatientMeetings patientMeetings={patientMeetings}/>,
   };
