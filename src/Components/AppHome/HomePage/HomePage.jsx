@@ -17,8 +17,8 @@ export default function HomePage({
   const components = {
     user: <HomeUserContainer user={user} dispatchState={dispatchState}/>,
     student: <HomeStudentContainer student={student}/>,
-    studentMeetings: <HomeStudentMeetings student={studentMeetings}/>,
-    patientMeetings: <HomePatientMeetings patient={patientMeetings}/>,
+    studentMeetings: <HomeStudentMeetings studentMeetings={studentMeetings}/>,
+    patientMeetings: <HomePatientMeetings patientMeetings={patientMeetings}/>,
   };
 
   const [activeComponent, setActiveComponent] = useState('user');

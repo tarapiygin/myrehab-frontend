@@ -1,11 +1,11 @@
 import { useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
-import UserModel from '../../Models/UserModel';
-import AccountsMenu from '../AccountsMenu/AccountsMenu';
-import AvatarLoader from '../AvatarLoader/AvatarLoader';
-import InputFormGroup from '../InputFormGroup/InputFormGroup';
-import API, { ORIGIN } from '../../API';
-import NoticeContext from '../../context';
+import UserModel from '../../../Models/UserModel';
+import AccountsMenu from '../../Base/AccountsMenu/AccountsMenu';
+import AvatarLoader from '../../Base/AvatarLoader/AvatarLoader';
+import InputFormGroup from '../../Base/InputFormGroup/InputFormGroup';
+import API, { ORIGIN } from '../../../API';
+import NoticeContext from '../../../context';
 
 export default function HomeUserContainer({ user, dispatchState }) {
   const noticeContext = useContext(NoticeContext);

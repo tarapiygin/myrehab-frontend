@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import './AvatarLoader.css';
 import { useContext, useRef } from 'react';
-import { avatarIsValid, resizeImage } from '../../utils';
-import NoticeContext from '../../context';
-import API from '../../API';
+import { avatarIsValid, resizeImage } from '../../../utils';
+import NoticeContext from '../../../context';
+import API from '../../../API';
 
 export default function AvatarLoader({ avatarUrl, dispatchState }) {
   const noticeContext = useContext(NoticeContext);

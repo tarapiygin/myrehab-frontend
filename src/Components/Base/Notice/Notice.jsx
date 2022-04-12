@@ -1,6 +1,6 @@
 import './Notice.css';
 import React, { useContext } from 'react';
-import NoticeContext from '../../context';
+import NoticeContext from '../../../context';
 
 export default function Notice() {
   const context = useContext(NoticeContext);
