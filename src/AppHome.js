@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import API from './API';
-import HomePage from './Components/HomePage/HomePage';
-import Notice from './Components/Notice/Notice';
+import HomePage from './Components/AppHome/HomePage/HomePage';
+import Notice from './Components/Base/Notice/Notice';
 import { NoticeProvider } from './context';
 
 const reducer = (state, action) => {
