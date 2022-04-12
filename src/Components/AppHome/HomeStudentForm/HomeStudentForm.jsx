@@ -1,4 +1,4 @@
-export default function HomeStudentContainer(props) {
+export default function HomeStudentForm(props) {
   const item = props;
   return (
     <div className="HomeStudentContainer">
