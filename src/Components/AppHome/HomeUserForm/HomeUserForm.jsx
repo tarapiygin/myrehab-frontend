@@ -1,50 +1,40 @@
-import { useContext, useRef } from 'react';
-import PropTypes from 'prop-types';
-import UserModel from '../../../Models/UserModel';
-import AccountsMenu from '../../Base/AccountsMenu/AccountsMenu';
+import { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../../../Store/actionCreators';
+import AccountsMenu from '../../Accounts/AccountsMenu/AccountsMenu';
 import AvatarLoader from '../../Base/AvatarLoader/AvatarLoader';
 import InputFormGroup from '../../Base/InputFormGroup/InputFormGroup';
-import API, { ORIGIN } from '../../../API';
-import NoticeContext from '../../../context';
 
-export default function HomeUserForm({ user, dispatchState }) {
-  const noticeContext = useContext(NoticeContext);
+import { ORIGIN } from '../../../API';
+
+export default function HomeUserForm() {
+  const user = useSelector((state) => state.data.user);
+  const dispath = useDispatch();
+
   const formRef = useRef(null);
 
   const onSubmitForm = async (e = null) => {
     if (e) e.preventDefault();
     const formData = new FormData(formRef.current);
-    const response = await API.updateUser(formData);
-    let message = '';
-    if (response.status === 'ok') {
-      message = 'Информация успешно обновлена';
-      noticeContext.toggleNotice({ show: true, message, status: true });
-      dispatchState({ type: 'updateUser', payload: response.data });
-    } else {
-      message = 'Возникла ошибка при обновлении данных, наши специалисты уже работают над ее решением';
-      noticeContext.toggleNotice({ show: true, message });
-    }
+    dispath(updateUser(formData));
   };
 
   return (
-    <div className="HomeUserContainer commonFormContainer">
+    <div className="HomeUserForm commonFormContainer">
       <AccountsMenu />
-      <AvatarLoader avatarUrl={ORIGIN + user.avatar} dispatchState={dispatchState}/>
-      <h2 className="HomeUserContainer__title">Общая информация</h2>
-      <form className="row" onSubmit={onSubmitForm} ref={formRef}>
-        <InputFormGroup name='first_name' label='Имя' initValue={user.first_name}/>
-        <InputFormGroup name='last_name' label='Фамилия' initValue={user.last_name}/>
-        <InputFormGroup name='middle_name' label='Отчество' initValue={user.middle_name}/>
-        <InputFormGroup name='phone' label='Телефон' initValue={user.phone}/>
-        <InputFormGroup name='country' label='Страна' initValue={user.country}/>
-        <InputFormGroup name='city' label='Город' initValue={user.city}/>
-        <button className="btn btn-outline-success btn-lg mx-auto" type="submit">Сохранить изменения</button>
+      <AvatarLoader userId={user.id} avatarUrl={ORIGIN + user.avatar}/>
+      <h2 className="HomeUserForm__title">Общая информация</h2>
+      <form onSubmit={onSubmitForm} ref={formRef}>
+        <div className='row'>
+          <InputFormGroup name='first_name' label='Имя' initValue={user.first_name}/>
+          <InputFormGroup name='last_name' label='Фамилия' initValue={user.last_name}/>
+          <InputFormGroup name='middle_name' label='Отчество' initValue={user.middle_name}/>
+          <InputFormGroup name='phone' label='Телефон' initValue={user.phone}/>
+          <InputFormGroup name='country' label='Страна' initValue={user.country}/>
+          <InputFormGroup name='city' label='Город' initValue={user.city}/>
+        </div>
+        <button className="btn btn-outline-success mx-auto d-block" type="submit">Сохранить изменения</button>
       </form>
     </div>
   );
 }
-
-HomeUserForm.propTypes = {
-  user: PropTypes.exact(UserModel),
-  dispatchState: PropTypes.func,
-};

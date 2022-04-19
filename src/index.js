@@ -1,15 +1,21 @@
 import './css/commonStyles.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import AppHome from './AppHome';
 import reportWebVitals from './reportWebVitals';
+import store from './Store/store';
+import Notice from './Components/Base/Notice/Notice';
 
 const reactHome = document.getElementById('react-home');
 const home = ReactDOM.createRoot(reactHome);
 if (reactHome !== null) {
   home.render(
     <React.StrictMode>
-      <AppHome />
+      <Provider store={store}>
+        <Notice />
+        <AppHome />
+      </Provider>
     </React.StrictMode>,
   );
 }

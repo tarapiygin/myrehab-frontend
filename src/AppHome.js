@@ -1,82 +1,41 @@
-import React, { useEffect, useReducer } from 'react';
-import API from './API';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import AccountsLoginForm from './Components/Accounts/AccountsLoginForm/AccountsLoginForm';
 import HomePage from './Components/AppHome/HomePage/HomePage';
-import Notice from './Components/Base/Notice/Notice';
-import { NoticeProvider } from './context';
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'updateData':
-      return { ...state, loading: 'loaded', data: action.payload };
-    case 'updateNotice':
-      return { ...state, notice: action.payload };
-    case 'updateLoadStatus':
-      return { ...state, loadStatus: action.payload };
-    case 'updateUser':
-      return { ...state, data: { ...state.data, user: action.payload } };
-    case 'updateStudent':
-      return { ...state, data: { ...state.data, student: action.payload } };
-    case 'updateStudentMeetings':
-      return { ...state, data: { ...state.data, studentMeetings: action.payload } };
-    case 'updatePatientMeetings':
-      return { ...state, data: { ...state.data, patientMeetings: action.payload } };
-    default:
-      throw new Error('type attribute not passed');
-  }
-};
+import { getAllData, updateToken } from './Store/actionCreators';
 
 function AppHome() {
-  const toggleNotice = (context) => {
-    /* Включатель уведомлений компонента Notice */
-    if (context.show === true) {
-      const time = context.time ? context.time : 7000;
-      setTimeout(() => {
-        toggleNotice({ show: false });
-      }, time);
-    }
-    dispatch({
-      type: 'updateNotice',
-      payload: {
-        show: context.show ? context.show : false,
-        message: context.message ? context.message : '',
-        status: context.status ? context.status : false,
-        toggleNotice,
-      },
-    });
-  };
-
-  const [state, dispatch] = useReducer(reducer, {
-    loadStatus: 'init',
-    notice: {
-      show: false,
-      message: '',
-      status: false,
-      toggleNotice,
-    },
-    data: {},
-  });
+  const loadStatus = useSelector((state) => state.loadStatus);
+  const token = useSelector((state) => state.token);
+  const data = useSelector((state) => state.data);
+  const error = useSelector((state) => state.error);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     /* Отключаем превью в HTML */
-    if (state.loadStatus === 'init') {
-      API.getAlldata().then((value) => dispatch({ type: 'updateData', payload: value }));
-      dispatch({ type: 'updateLoadStatus', payload: 'loading' });
+    if (loadStatus === 'INIT') {
+      dispatch(getAllData());
     }
-    if (state.loading === 'loaded') {
+    if (loadStatus === 'LOADED' || !token) {
       const previewEl = document.getElementById('Preview');
       if (previewEl) {
         previewEl.classList.add('PreviewContainer_d-none');
         // setTimeout(() => previewEl.classList.add('PreviewContainer_d-none'), 1200);
       }
+      // обновление данных каждую минуту
+      setTimeout(() => dispatch(getAllData()), 10000);
     }
-  });
+  }, [loadStatus, token, dispatch]);
+
+  const onLoginSuccess = (newToken) => {
+    dispatch(updateToken(newToken));
+    dispatch(getAllData());
+  };
 
   return (
     <div className="AppHome">
-      <NoticeProvider value={state.notice}>
-        <Notice />
-        {state.loading === 'loaded' && <HomePage {...state.data} dispatchState={dispatch} />}
-      </NoticeProvider>
+      {!token && error === 'ERROR_AUTH' && < AccountsLoginForm onLoginSuccess={onLoginSuccess} />}
+      {loadStatus !== 'INIT' && data && <HomePage />}
     </div >
   );
 }

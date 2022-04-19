@@ -1,12 +1,10 @@
 /* eslint-disable max-len */
 import './AvatarLoader.css';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import { avatarIsValid, resizeImage } from '../../../utils';
-import NoticeContext from '../../../context';
-import API from '../../../API';
+import { showNotice, updateUser } from '../../../Store/actionCreators';
 
-export default function AvatarLoader({ avatarUrl, dispatchState }) {
-  const noticeContext = useContext(NoticeContext);
+export default function AvatarLoader({ userId, avatarUrl }) {
   const inputRef = useRef(null);
 
   const onChangeAvatar = (e) => {
@@ -19,23 +17,20 @@ export default function AvatarLoader({ avatarUrl, dispatchState }) {
           img.remove();
           updateAvatar(smallFile);
         });
-      } else noticeContext.toggleNotice({ show: true, message });
+      }
+      showNotice(message, status);
     };
   };
 
   const updateAvatar = async (file) => {
     const formData = new FormData();
     formData.append('avatar', file, 'avatar.jpg');
-    const response = await API.updateUser(formData);
-    let message = '';
-    if (response.status === 'ok') {
-      message = 'Мы обновили изображение. У Вас изумительное фото😊';
-      noticeContext.toggleNotice({ show: true, message, status: true });
-      dispatchState({ type: 'updateUser', payload: response.data });
-    } else {
-      message = 'Возникла ошибка при обновлении данных, наши специалисты уже работают над ее решением';
-      noticeContext.toggleNotice({ show: true, message });
-    }
+    formData.append('id', userId);
+    updateUser(
+      formData,
+      'Мы обновили изображение. У Вас изумительное фото😊',
+      'Возникла ошибка при обновлении данных, наши специалисты уже работают над ее решением',
+    );
   };
 
   const onClickContainer = (e) => {

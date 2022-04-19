@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export function resizeImage(img, callback) {
   // const img = document.createElement('img');
   // img.src = fileUrl;

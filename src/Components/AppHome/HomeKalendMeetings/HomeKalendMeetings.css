@@ -1,0 +1,40 @@
+.Calendar__wrapper {
+  width: 100%;
+  height: 100vh;
+  max-height: 600px;
+  display: flex;
+  margin: 0 auto;
+  border: 1px solid #d6d6d6;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  flex-direction: column;
+  position: relative;
+}
+
+.HomeKalendMeetings__statusesTitle {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 1em;
+}
+
+.HomeKalendMeetings__statuses {
+  display: inline-block;
+  padding: 0;
+}
+
+.HomeKalendMeetings__statuses__item {
+  display: inline-block;
+  margin-right: 7px;
+  padding: 1px 5px;
+  border: 1px solid #b3b3b3;
+  border-radius: 5px;
+  font-size: 0.7em;
+}
+
+@media (max-width: 992px) {
+  .Kalend__ButtonIcon__container:nth-child(3) {
+    display: none;
+  }
+}

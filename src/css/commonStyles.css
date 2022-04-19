@@ -35,3 +35,23 @@ h3 {
     padding: 30px 20px 20px;
   }
 }
+
+.statusColor--approval {
+  background-color: #4caf50;
+  color: #ffffff;
+}
+
+.statusColor--pending {
+  background-color: #7047c3;
+  color: #ffffff;
+}
+
+.statusColor--took_place {
+  background-color: #009688;
+  color: #ffffff;
+}
+
+.statusColor--rejected, .statusColor--rejected_student, .statusColor--rejected_patient {
+  background-color: #999999;
+  color: #ffffff;
+}
