@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { useState, useRef } from 'react';
 import { Russian } from 'flatpickr/dist/l10n/ru';
 import Flatpickr from 'react-flatpickr';

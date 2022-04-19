@@ -24,6 +24,7 @@ module.exports = {
       'LabeledStatement',
       'WithStatement',
     ],
+    camelcase: 'off',
   },
   settings: {
     'import/resolver': {

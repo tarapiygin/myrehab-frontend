@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import './HomeMeetingFormEdit.css';
 import { useRef, useState } from 'react';
 import 'flatpickr/dist/themes/airbnb.css';
