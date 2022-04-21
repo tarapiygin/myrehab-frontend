@@ -6,9 +6,11 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_STUDENT_SUCCESS,
   UPDATE_STUDENT_MEETING_SUCCESS,
+  UPDATE_PATIENT_MEETING_SUCCESS,
   ADD_STUDENT_MEETING_SUCCESS,
   SET_ACTIVE_COMPONENT,
-  SET_EDITABLE_MEETING,
+  SET_EDITABLE_STUDENT_MEETING,
+  SET_EDITABLE_PATIENT_MEETING,
 } from './actionTypes';
 
 export function showNotice(message, status, time = 7000) {
@@ -97,8 +99,13 @@ export function updateStudentMeetingSuccess(meeting) {
   return { type: UPDATE_STUDENT_MEETING_SUCCESS, payload: meeting };
 }
 
-export const updateStudentMeeting = (
+export function updatePatientMeetingSuccess(meeting) {
+  return { type: UPDATE_PATIENT_MEETING_SUCCESS, payload: meeting };
+}
+
+export const updateMeeting = (
   jsonData,
+  type,
   messageSuccess,
   messageFailure,
 ) => async (dispatch, getState) => {
@@ -106,7 +113,8 @@ export const updateStudentMeeting = (
   if (response.status === 'ok') {
     const text = messageSuccess || 'Информация успешно обновлена';
     dispatch(showNotice(text, true));
-    dispatch(updateStudentMeetingSuccess(response.data));
+    if (type === 'student') dispatch(updateStudentMeetingSuccess(response.data));
+    if (type === 'patient') dispatch(updatePatientMeetingSuccess(response.data));
   } else {
     const text = messageFailure || 'К сожалению возникла ошибка, попробуйте позже...';
     dispatch(showNotice(text, false));
@@ -137,6 +145,10 @@ export function setActiveComponent(data) {
   return { type: SET_ACTIVE_COMPONENT, payload: data };
 }
 
-export function setEditableMeeting(id) {
-  return { type: SET_EDITABLE_MEETING, payload: id };
+export function setEditableStudentMeeting(id) {
+  return { type: SET_EDITABLE_STUDENT_MEETING, payload: id };
+}
+
+export function setEditablePatientMeeting(id) {
+  return { type: SET_EDITABLE_PATIENT_MEETING, payload: id };
 }

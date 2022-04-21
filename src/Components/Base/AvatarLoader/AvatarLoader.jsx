@@ -1,11 +1,13 @@
 /* eslint-disable max-len */
 import './AvatarLoader.css';
 import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { avatarIsValid, resizeImage } from '../../../utils';
 import { showNotice, updateUser } from '../../../Store/actionCreators';
 
 export default function AvatarLoader({ userId, avatarUrl }) {
   const inputRef = useRef(null);
+  const dispatch = useDispatch();
 
   const onChangeAvatar = (e) => {
     const img = document.createElement('img');
@@ -17,8 +19,7 @@ export default function AvatarLoader({ userId, avatarUrl }) {
           img.remove();
           updateAvatar(smallFile);
         });
-      }
-      showNotice(message, status);
+      } else dispatch(showNotice(message, status));
     };
   };
 
@@ -26,11 +27,11 @@ export default function AvatarLoader({ userId, avatarUrl }) {
     const formData = new FormData();
     formData.append('avatar', file, 'avatar.jpg');
     formData.append('id', userId);
-    updateUser(
+    dispatch(updateUser(
       formData,
       'Мы обновили изображение. У Вас изумительное фото😊',
       'Возникла ошибка при обновлении данных, наши специалисты уже работают над ее решением',
-    );
+    ));
   };
 
   const onClickContainer = (e) => {

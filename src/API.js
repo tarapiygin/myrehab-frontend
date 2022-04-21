@@ -1,7 +1,7 @@
 import { getCookie } from './utils';
 
 const getOrigin = () => {
-  if (process.env.NODE_ENV === 'development') return 'http://127.0.0.1';
+  if (process.env.NODE_ENV === 'development') return 'http://192.168.1.7';
   return window.origin;
 };
 
@@ -118,26 +118,38 @@ export default class API {
     return API.getResponse(adress, '', method, body);
   }
 
-  // static async createPatient(body) {
-  //   // отправляем запрос на создание пациента, если все ОК, то ничего не вернется
-  //   // если ошибка, то отрисовываем их в виджете
-  //   const adress = '';
-  //   const method = 'POST';
-  //   return API.getResponse(adress, method, body);
-  // }
+  static async createPatient(body) {
+    // отправляем запрос на создание пациента, если все ОК, то ничего не вернется
+    // если ошибка, то отрисовываем их в виджете
+    const url = new URL(window.location.href);
+    const method = 'POST';
+    const headers = {
+      'X-CSRFToken': getCookie(),
+    };
+    const response = await fetch(url.href, { headers, method, body });
+    try {
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+      return {};
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 
-  // static async getDataSearchForm() {
-  //   const url = new URL(HREF);
-  //   url.searchParams.set('format', 'JSON');
-  //   const response = await fetch(url.href);
-  //   try {
-  //     if (response.ok) {
-  //       const rowData = await response.json();
-  //       return rowData.data;
-  //     }
-  //     return {};
-  //   } catch (error) {
-  //     throw new Error(error.message);
-  //   }
-  // }
+  static async getDataSearchForm() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('format', 'JSON');
+    const response = await fetch(url.href);
+    try {
+      if (response.ok) {
+        const rowData = await response.json();
+        return rowData.data;
+      }
+      return {};
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }

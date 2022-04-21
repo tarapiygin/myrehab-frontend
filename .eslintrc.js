@@ -25,6 +25,7 @@ module.exports = {
       'WithStatement',
     ],
     camelcase: 'off',
+    'linebreak-style': 0,
   },
   settings: {
     'import/resolver': {

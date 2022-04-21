@@ -1,3 +1,4 @@
+import 'flatpickr/dist/themes/airbnb.css';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AccountsLoginForm from './Components/Accounts/AccountsLoginForm/AccountsLoginForm';
@@ -19,11 +20,8 @@ function AppHome() {
     if (loadStatus === 'LOADED' || !token) {
       const previewEl = document.getElementById('Preview');
       if (previewEl) {
-        previewEl.classList.add('PreviewContainer_d-none');
-        // setTimeout(() => previewEl.classList.add('PreviewContainer_d-none'), 1200);
+        setTimeout(() => previewEl.classList.add('PreviewContainer_d-none'), 1200);
       }
-      // обновление данных каждую минуту
-      setTimeout(() => dispatch(getAllData()), 10000);
     }
   }, [loadStatus, token, dispatch]);
 

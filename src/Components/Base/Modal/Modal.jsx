@@ -21,7 +21,7 @@ export default function Modal({
   });
   return (
   <div className='modal fade' tabIndex="-1" role="dialog" ref={container} >
-    <div className="modal-dialog" role="document">
+    <div className="modal-dialog">
       <div className="modal-content">
         <div className="modal-header">
           <h5 className="modal-title">{title}</h5>

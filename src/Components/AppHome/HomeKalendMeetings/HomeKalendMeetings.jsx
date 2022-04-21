@@ -2,11 +2,15 @@ import 'kalend/dist/styles/index.css';
 import './HomeKalendMeetings.css';
 import PropTypes from 'prop-types';
 import Kalend, { CalendarView } from 'kalend';
+import { useEffect } from 'react';
 import MeetingModel from '../../../Models/MeetingModel';
-import HomeAddButton from '../HomeAddButton/HomeAddButton';
 
-export default function HomeKalendMeetings({ meetings, onNewEventClick, onEventClick }) {
-  const onKalendEventClick = (e) => onEventClick(e.id);
+export default function HomeKalendMeetings({
+  meetings, onNewEventClick, onEventClick, createMeetingButton,
+}) {
+  const onKalendEventClick = (e) => {
+    if (onEventClick) onEventClick(e.id);
+  };
   const renderKalend = () => {
     const newEvents = meetings.map((m) => {
       let color = '';
@@ -22,32 +26,19 @@ export default function HomeKalendMeetings({ meetings, onNewEventClick, onEventC
       if (m.status === 'took_place') {
         color = '#009688';
       }
+      const startAt = m.date_of_appointment || m.date_of_creation;
+      const endAt = m.date_of_appointment || m.date_of_creation;
       const event = {
         id: m.id,
-        startAt: m.date_of_appointment,
-        endAt: m.date_of_appointment,
+        startAt,
+        endAt,
         // timezoneStartAt: string; // optional
         summary: m.patient.user.full_name,
         color,
       };
       return event;
     });
-    return <Kalend
-    onEventClick={onKalendEventClick}
-    events={newEvents}
-    hourHeight={40}
-    initialView={CalendarView.AGENDA}
-    disabledViews={[CalendarView.DAY, CalendarView.THREE_DAYS]}
-    timeFormat={'24'}
-    weekDayStart={'Monday'}
-    language={'ru'}
-    draggingDisabledConditions={{
-      summary: 'Computers',
-      allDay: true,
-      color: 'pink',
-    }}
-    isNewEventOpen={true}
-  />;
+    return newEvents;
   };
 
   return (
@@ -61,8 +52,23 @@ export default function HomeKalendMeetings({ meetings, onNewEventClick, onEventC
   </ul>
 
   <div className="Calendar__wrapper">
-  <HomeAddButton text={'Создать запись'} onClick={onNewEventClick}/>
-  {renderKalend()}
+  {createMeetingButton}
+  <Kalend
+    onEventClick={onKalendEventClick}
+    events={renderKalend()}
+    hourHeight={40}
+    initialView={CalendarView.AGENDA}
+    disabledViews={[CalendarView.DAY, CalendarView.THREE_DAYS]}
+    timeFormat={'24'}
+    weekDayStart={'Monday'}
+    language={'ru'}
+    // draggingDisabledConditions={{
+    //   summary: 'Computers',
+    //   allDay: true,
+    //   color: 'pink',
+    // }}
+    isNewEventOpen={true}
+  />
 </div>
 </div>);
 }

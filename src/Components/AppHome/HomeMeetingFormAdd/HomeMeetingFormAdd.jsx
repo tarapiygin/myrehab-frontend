@@ -125,6 +125,7 @@ export default function HomeMeetingFormAdd({ student, onClose }) {
             altFormat: 'd.m.Y в H:i',
             allowInput: true,
             enableTime: true,
+            enableSeconds: false,
             locale: Russian,
             time_24hr: true,
             monthSelectorType: 'static',

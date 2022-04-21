@@ -5,14 +5,17 @@ import {
   GET_DATA_REQUEST, GET_DATA_SUCCESS, GET_DATA_FAILURE,
   UPDATE_USER_SUCCESS, UPDATE_STUDENT_SUCCESS, UPDATE_PATIENT_SUCCESS,
   ADD_STUDENT_MEETING_SUCCESS, UPDATE_STUDENT_MEETING_SUCCESS,
+  UPDATE_PATIENT_MEETING_SUCCESS,
   SHOW_NOTICE_MESSAGE, HIDE_NOTICE_MESSAGE, SET_ACTIVE_COMPONENT,
-  SET_EDITABLE_MEETING,
+  SET_EDITABLE_STUDENT_MEETING,
+  SET_EDITABLE_PATIENT_MEETING,
 } from './actionTypes';
 
 const initialState = {
   loadStatus: 'INIT',
   activeComponent: 'USER',
-  editableMeeting: null,
+  editableStudentMeeting: null,
+  editablePatientMeeting: null,
   token: null,
   error: null,
   data: null,
@@ -28,10 +31,15 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_ACTIVE_COMPONENT:
       return { ...state, activeComponent: action.payload };
-    case SET_EDITABLE_MEETING:
+    case SET_EDITABLE_STUDENT_MEETING:
       return {
         ...state,
-        editableMeeting: state.data.studentMeetings.find((m) => m.id === action.payload),
+        editableStudentMeeting: state.data.studentMeetings.find((m) => m.id === action.payload),
+      };
+    case SET_EDITABLE_PATIENT_MEETING:
+      return {
+        ...state,
+        editablePatientMeeting: state.data.patientMeetings.find((m) => m.id === action.payload),
       };
     case UPDATE_TOKEN_SUCCESS:
       return { ...state, token: action.payload };
@@ -79,6 +87,18 @@ export default function reducer(state = initialState, action) {
         data: {
           ...state.data,
           studentMeetings: updateStudentMeetings,
+        },
+      };
+    case UPDATE_PATIENT_MEETING_SUCCESS:
+      const updatePatientMeetings = state.data.patientMeetings.map((m) => {
+        if (m.id === action.payload.id) return action.payload;
+        return m;
+      });
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          patientMeetings: updatePatientMeetings,
         },
       };
     case SHOW_NOTICE_MESSAGE:

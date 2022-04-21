@@ -3,15 +3,15 @@ import { DateTime as dt } from 'luxon';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import MeetingModel from '../../../Models/MeetingModel';
+import HomeAddButton from '../HomeAddButton/HomeAddButton';
 import Modal from '../../Base/Modal/Modal';
 import HomeKalendMeetings from '../HomeKalendMeetings/HomeKalendMeetings';
-import HomeMeetingFormEdit from '../HomeMeetingFormEdit/HomeMeetingFormEdit';
+import HomeStudentMeetingFormEdit from '../HomeStudentMeetingFormEdit/HomeStudentMeetingFormEdit';
 import HomeMeetingFormAdd from '../HomeMeetingFormAdd/HomeMeetingFormAdd';
-import { setEditableMeeting } from '../../../Store/actionCreators';
+import { setEditableStudentMeeting } from '../../../Store/actionCreators';
 
 export default function HomeStudentMeetings({ setFilterMeetings, filter }) {
-  const editableMeeting = useSelector((state) => state.editableMeeting);
+  const editableMeeting = useSelector((state) => state.editableStudentMeeting);
   const studentMeetings = useSelector((state) => state.data.studentMeetings);
   const student = useSelector((state) => state.data.student);
   const dispath = useDispatch();
@@ -30,18 +30,18 @@ export default function HomeStudentMeetings({ setFilterMeetings, filter }) {
     setCreateMeetingForm(true);
   };
 
-  const onEventClick = (id) => dispath(setEditableMeeting(id));
+  const onEventClick = (id) => dispath(setEditableStudentMeeting(id));
 
   const onCloseMeetingFormEdit = (e) => {
     e.preventDefault();
-    dispath(setEditableMeeting(null));
+    dispath(setEditableStudentMeeting(null));
   };
 
   const onCloseMeetingFormAdd = (e) => {
     e.preventDefault();
     setCreateMeetingForm(false);
   };
-
+  const createMeetingButton = <HomeAddButton text={'Создать запись'} onClick={onNewEventClick}/>;
   return (
     <div className='HomeStudentMeetings commonFormContainer'>
       <h2 className='HomeStudentMeetings__title'>
@@ -50,7 +50,7 @@ export default function HomeStudentMeetings({ setFilterMeetings, filter }) {
       </h2>
       <Modal
       title={editableMeeting ? `Запись №${editableMeeting.id} от ${dt.fromISO(editableMeeting.date_of_creation).toLocaleString()}` : ''}
-      body={editableMeeting ? <HomeMeetingFormEdit meeting={editableMeeting} onClose={onCloseMeetingFormEdit}/> : ''}
+      body={editableMeeting ? <HomeStudentMeetingFormEdit meeting={editableMeeting} onClose={onCloseMeetingFormEdit}/> : ''}
       onClose={onCloseMeetingFormEdit}
       show={!!editableMeeting}
       />
@@ -64,13 +64,13 @@ export default function HomeStudentMeetings({ setFilterMeetings, filter }) {
       <HomeKalendMeetings
       meetings={filterMeetings(studentMeetings)}
       onNewEventClick={onNewEventClick}
-      onEventClick={onEventClick}/>
+      onEventClick={onEventClick}
+      createMeetingButton={createMeetingButton}/>
     </div>
   );
 }
 
 HomeStudentMeetings.propTypes = {
-  studentMeetings: PropTypes.arrayOf(PropTypes.exact(MeetingModel)),
-  onFilterMeetings: PropTypes.func,
-  dispatchState: PropTypes.func,
+  setFilterMeetings: PropTypes.func,
+  filter: PropTypes.object,
 };

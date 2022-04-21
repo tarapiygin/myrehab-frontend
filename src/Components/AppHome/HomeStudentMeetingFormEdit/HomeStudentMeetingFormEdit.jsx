@@ -1,18 +1,16 @@
-import './HomeMeetingFormEdit.css';
+import './HomeStudentMeetingFormEdit.css';
 import { useRef, useState } from 'react';
-import 'flatpickr/dist/themes/airbnb.css';
 import { Russian } from 'flatpickr/dist/l10n/ru';
 import Flatpickr from 'react-flatpickr';
 import { DateTime as dt } from 'luxon';
 
 import { useDispatch } from 'react-redux';
-import InputFormGroup from '../../Base/InputFormGroup/InputFormGroup';
 import InnerAllert from '../../Base/InnerAllert/InnerAllert';
 import TextAreaFormGroup from '../../Base/TextAreaFormGroup/TextAreaFormGroup';
-import { updateStudentMeeting } from '../../../Store/actionCreators';
+import { updateMeeting } from '../../../Store/actionCreators';
 import STATUSES from '../../../constants';
 
-export default function HomeMeetingFormEdit({
+export default function HomeStudentMeetingFormEdit({
   meeting, onClose,
 }) {
   const innerAllertDefault = {
@@ -40,11 +38,11 @@ export default function HomeMeetingFormEdit({
 
   const onSubmitForm = async (e) => {
     if (e) e.preventDefault();
-    dispatch(updateStudentMeeting(JSON.stringify({
+    dispatch(updateMeeting(JSON.stringify({
       ...meetingData,
       student: meetingData.student.id,
       patient: meetingData.patient.id,
-    }), 'Запись обновлена!'));
+    }), 'student', 'Запись обновлена!'));
   };
 
   const onClickRejectStatus = (e) => {
@@ -54,12 +52,12 @@ export default function HomeMeetingFormEdit({
       title: 'Вы хотите отменить прием?',
       body: 'При отмене записи Ваш пациент получит уведомление. Отменить это действие - невозможно!',
       onApprove: () => setState((prev) => {
-        dispatch(updateStudentMeeting(JSON.stringify({
+        dispatch(updateMeeting(JSON.stringify({
           ...prev,
           student: meetingData.student.id,
           patient: meetingData.patient.id,
           status: 'rejected_student',
-        }), 'Запись отменена'));
+        }), 'student', 'Запись отменена'));
         return { ...prev, status: 'rejected_student' };
       }),
     });
@@ -72,12 +70,12 @@ export default function HomeMeetingFormEdit({
       title: 'Прием уже состоялся?',
       body: 'После подтверждения запись будет перенесена в раздел состоявшихся и станет недоступна для редактирования',
       onApprove: () => setState((prev) => {
-        dispatch(updateStudentMeeting(JSON.stringify({
+        dispatch(updateMeeting(JSON.stringify({
           ...prev,
           student: meetingData.student.id,
           patient: meetingData.patient.id,
           status: 'took_place',
-        }), 'Запись помечена состояшейся'));
+        }), 'student', 'Запись помечена состояшейся'));
         return { ...prev, status: 'took_place' };
       }),
     });
@@ -97,7 +95,7 @@ export default function HomeMeetingFormEdit({
 
   const renderStatusButtons = () => {
     const buttons = [];
-    if (meetingData.status === 'approval' && new Date(meetingData.date_of_appointment) < Date.now()) {
+    if (meetingData.status === 'approval' && meetingData.date_of_appointment && new Date(meetingData.date_of_appointment) < Date.now()) {
       buttons.push(<button
         key='took_place'
         className='btn StatusButtons__Button statusColor--took_place'
@@ -129,7 +127,6 @@ export default function HomeMeetingFormEdit({
     <p>Текущий статус: <span className={`HomeMeetingFormEdit__Status statusColor--${meetingData.status}`}>{STATUSES[meetingData.status]}</span></p>
     <p>Телефон: <a href={`tel:${meetingData.patient.user.phone}`}>{meetingData.patient.user.phone}</a></p>
     <p>Email: <a href={`mailto:${meetingData.patient.user.email}`}>{meetingData.patient.user.email}</a></p>
-    <InputFormGroup name='id' label='Номер' initValue={meetingData.id} extendedClasses='d-none' readonly={true}/>
 
     {checkStatuses() && <div className='HomeMeetingFormEdit__StatusButtons'>
       <p className='HomeMeetingFormEdit__StatusButtons__Title'>Управление статусом:</p>
@@ -158,7 +155,7 @@ export default function HomeMeetingFormEdit({
       />
     </div>}
     {!checkStatuses() && <p>
-      Назначенное время: {dt.fromISO(meetingData.date_of_creation).toFormat('dd.MM.yyyy в HH:mm')}</p>}
+      Назначенное время: {dt.fromISO(meetingData.date_of_appointment).toFormat('dd.MM.yyyy в HH:mm')}</p>}
 
     {checkStatuses() && <TextAreaFormGroup name='address' label='Адресс места приема' requred={false} extendedClasses=''
     initValue={meetingData.address ? meetingData.address : meetingData.student.work_place}
