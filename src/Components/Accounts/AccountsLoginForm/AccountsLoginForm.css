@@ -1,0 +1,10 @@
+.AccountsLoginForm {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.AccountsLoginForm__button {
+  width: 100%;
+  max-width: 150px;
+}

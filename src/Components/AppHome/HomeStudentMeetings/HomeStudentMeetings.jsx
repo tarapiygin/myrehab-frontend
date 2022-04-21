@@ -1,91 +1,76 @@
-import PropTypes from 'prop-types';
-import Kalend, { CalendarView } from 'kalend';
-import 'kalend/dist/styles/index.css';
-import { useEffect, useState } from 'react';
 import './HomeStudentMeetings.css';
-import MeetingModel from '../../../Models/MeetingModel';
+import { DateTime as dt } from 'luxon';
+import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import HomeAddButton from '../HomeAddButton/HomeAddButton';
+import Modal from '../../Base/Modal/Modal';
+import HomeKalendMeetings from '../HomeKalendMeetings/HomeKalendMeetings';
+import HomeStudentMeetingFormEdit from '../HomeStudentMeetingFormEdit/HomeStudentMeetingFormEdit';
+import HomeMeetingFormAdd from '../HomeMeetingFormAdd/HomeMeetingFormAdd';
+import { setEditableStudentMeeting } from '../../../Store/actionCreators';
 
-export default function HomeStudentMeetings({ studentMeetings }) {
-  const [events, setEvents] = useState([]);
+export default function HomeStudentMeetings({ setFilterMeetings, filter }) {
+  const editableMeeting = useSelector((state) => state.editableStudentMeeting);
+  const studentMeetings = useSelector((state) => state.data.studentMeetings);
+  const student = useSelector((state) => state.data.student);
+  const dispath = useDispatch();
+  const [createMeeting, setCreateMeetingForm] = useState(false);
 
-  const createEvents = (meetings) => {
-    const newEvents = meetings.map((m) => {
-      const patientName = `${m.patient.user.first_name}`;
-      let color = 'green';
-      if (m.status === 'rejected') {
-        color = '#c17474';
-      }
-      const event = {
-        id: m.id,
-        startAt: m.date_of_appointment,
-        endAt: m.date_of_appointment,
-        // timezoneStartAt: string; // optional
-        summary: patientName,
-        color,
-      };
-      return event;
-    });
-    setEvents(newEvents);
-  };
-  // Create and load demo events
-  useEffect(() => {
-    createEvents(studentMeetings);
-  });
-
-  const onNewEventClick = () => {
-    const msg = `New event click action\n\n Callback data:\n\n${JSON.stringify({
-      hour: 1,
-      day: 21,
-      startAt: 22,
-      endAt: 22,
-      view: 22,
-      event: 'click event ',
-    })}`;
-    console.log(msg);
+  const onClickClearFilterButton = () => {
+    setFilterMeetings();
   };
 
-  // Callback for event click
-  const onEventClick = () => {
-    const msg = `Click on event action\n\n Callback data:\n\n${JSON.stringify(
-      22,
-    )}`;
-    console.log(msg);
+  const filterMeetings = (meetings) => {
+    if (filter) return meetings.filter((m) => m.patient.id === filter.id);
+    return meetings;
   };
 
-  // Callback after dragging is finished
-  const onEventDragFinish = () => { console.log('hi'); };
+  const onNewEventClick = (e) => {
+    setCreateMeetingForm(true);
+  };
 
+  const onEventClick = (id) => dispath(setEditableStudentMeeting(id));
+
+  const onCloseMeetingFormEdit = (e) => {
+    e.preventDefault();
+    dispath(setEditableStudentMeeting(null));
+  };
+
+  const onCloseMeetingFormAdd = (e) => {
+    e.preventDefault();
+    setCreateMeetingForm(false);
+  };
+  const createMeetingButton = <HomeAddButton text={'Создать запись'} onClick={onNewEventClick}/>;
   return (
-    <div className="HomeStudentMeetings commonFormContainer">
-      <h2 className="HomeStudentMeetings__title">Записи моих пациентов</h2>
-      <div className="Calendar__wrapper">
-        <Kalend
-        // onEventClick={(e) => console.log(e)}
-        onNewEventClick={(e) => console.log(e)}
-        events={events}
-        hourHeight={40}
-        initialView={CalendarView.MONTH}
-        disabledViews={[CalendarView.DAY, CalendarView.THREE_DAYS, CalendarView.AGENDA]}
-        // onSelectView={(e) => console.log(e)}
-        // selectedView={(e) => console.log(e)}
-        // onPageChange={(e) => console.log(e)}
-        timeFormat={'24'}
-        weekDayStart={'Monday'}
-        calendarIDsHidden={['work']}
-        language={'ru'}
-        showTimeLine={true}
-        draggingDisabledConditions={{
-          summary: 'Computers',
-          allDay: false,
-          color: 'pink',
-        }}
-        // onEventDragFinish={onEventDragFinish}
+    <div className='HomeStudentMeetings commonFormContainer'>
+      <h2 className='HomeStudentMeetings__title'>
+        {!filter && 'Записи моих пациентов'}
+        {filter && `Пациент ${filter.user.full_name}`}
+      </h2>
+      <Modal
+      title={editableMeeting ? `Запись №${editableMeeting.id} от ${dt.fromISO(editableMeeting.date_of_creation).toLocaleString()}` : ''}
+      body={editableMeeting ? <HomeStudentMeetingFormEdit meeting={editableMeeting} onClose={onCloseMeetingFormEdit}/> : ''}
+      onClose={onCloseMeetingFormEdit}
+      show={!!editableMeeting}
       />
-    </div>
+      <Modal
+      title={'Записать пациента'}
+      body={createMeeting ? <HomeMeetingFormAdd student={student} onSave={''} onClose={onCloseMeetingFormAdd}/> : ''}
+      onClose={onCloseMeetingFormAdd}
+      show={createMeeting}
+      />
+      {filter && <button className='btn btn-outline-info btn-block mb-3' onClick={onClickClearFilterButton}>Очистить фильтр</button>}
+      <HomeKalendMeetings
+      meetings={filterMeetings(studentMeetings)}
+      onNewEventClick={onNewEventClick}
+      onEventClick={onEventClick}
+      createMeetingButton={createMeetingButton}/>
     </div>
   );
 }
 
 HomeStudentMeetings.propTypes = {
-  studentMeetings: PropTypes.arrayOf(PropTypes.exact(MeetingModel)),
+  setFilterMeetings: PropTypes.func,
+  filter: PropTypes.object,
 };

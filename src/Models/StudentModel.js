@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import PatientModel from './PatientModel';
 
 const StudentModel = {
   id: PropTypes.number.isRequired,
@@ -14,6 +15,7 @@ const StudentModel = {
   vk_link: PropTypes.string,
   tg_link: PropTypes.string,
   inst_link: PropTypes.string,
+  patients: PropTypes.arrayOf(PropTypes.exact(PatientModel)),
 };
 
 export default StudentModel;

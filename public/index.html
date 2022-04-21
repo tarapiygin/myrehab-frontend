@@ -32,7 +32,7 @@
     .PreviewContainer { display: flex; flex-direction: column; justify-content: center; align-items: center; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #ffffff; z-index: 9999; opacity: 1; transition: opacity 1s; height: 100vh; } .PreviewContainer_d-none { opacity: 0; display: none !important; } .PreviewContainer_title { font-size: 1.2rem; } .Preview { width: 110px; height: 90px; margin: 50px auto 0; position: relative; } .Preview span { background: linear-gradient(#59C173, #a17fe0, #5D26C1); width: 6px; height: 90px; border-radius: 10px; transform: translateY(-50%) rotate(0); position: absolute; top: 50%; animation: animate 0.7s infinite alternate-reverse; } .Preview span:nth-child(1) { margin-left: 0px; } .Preview span:nth-child(2) { margin-left: 14px; animation-delay: 0.1s; } .Preview span:nth-child(3) { margin-left: 28px; animation-delay: 0.2s; } .Preview span:nth-child(4) { margin-left: 42px; animation-delay: 0.3s; } .Preview span:nth-child(5) { margin-left: 56px; animation-delay: 0.4s; } .Preview span:nth-child(6) { margin-left: 70px; animation-delay: 0.5s; } .Preview span:nth-child(7) { margin-left: 84px; animation-delay: 0.6s; } .Preview span:nth-child(8) { margin-left: 98px; animation-delay: 0.7s; } @keyframes animate { 0% { height: 5px; transform: translateY(-50%) rotate(40deg); } 100% { height: 90px; transform: translateY(-50%) rotate(0deg); } }
   </style>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id='Preview' class="PreviewContainer">
+  <!-- <div id='Preview' class="PreviewContainer">
     <h2 class="PreviewContainer_title">Загружаем данные...</h2>
     <div class="Preview">
       <span></span>
@@ -44,8 +44,14 @@
       <span></span>
       <span></span>
     </div>
-  </div>
-  <div id="react-home"></div>
+  </div> -->
+  <!-- <div id="react-home"></div> -->
+  <!-- <div class="col-12 col-md-8 mb-4">
+    <form action="{% url 'students_list_url' %}" id="searchForm">
+
+    </form>
+  </div> -->
+  <div id="meetingForm"></div>
 </body>
 
 </html>

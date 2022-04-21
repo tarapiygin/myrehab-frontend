@@ -1,0 +1,26 @@
+.HomePatientItem {
+  margin: 15px 0 0 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  list-style-type: none;
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 7px;
+}
+
+.HomePatientItem__field {
+  flex-basis: 25%;
+  padding: 0px 2px;
+}
+
+.HomePatientItem__meetings{
+  color: #007bff;
+  padding: 0px 3px;
+  border: 1px solid;
+  text-align: center;
+}
+@media (max-width: 767px) {
+  .HomePatientItem__field {
+    flex-basis: 50%;
+  }
+}

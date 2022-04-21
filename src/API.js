@@ -1,23 +1,20 @@
 import { getCookie } from './utils';
 
-// eslint-disable-next-line import/no-mutable-exports
-let ORIGIN = window.origin;
-if (process.env.NODE_ENV === 'development') {
-  ORIGIN = 'http://127.0.0.1';
-}
+const getOrigin = () => {
+  if (process.env.NODE_ENV === 'development') return 'http://192.168.1.7';
+  return window.origin;
+};
 
-export { ORIGIN };
+export const ORIGIN = getOrigin();
 
 const CALLS = [];
 export default class API {
-  static async getResponse(adress, method = 'GET', body = undefined, exHeaders = {}) {
+  static async getResponse(adress, token = '', method = 'GET', body = undefined, exHeaders = {}) {
     const url = new URL(ORIGIN + adress);
     const headers = exHeaders;
     const controller = new AbortController();
-
-    if (method in ['POST', 'PUT', 'DELETE']) {
-      headers['X-CSRFToken'] = getCookie();
-    }
+    headers['X-CSRFToken'] = getCookie();
+    if (token !== '') headers.Authorization = `Token ${token}`;
     const i = CALLS.findIndex((c) => c.href === url.href && c.method === method);
     if (i !== -1) {
       CALLS[i].controller.abort();
@@ -31,39 +28,41 @@ export default class API {
       controller,
     };
     CALLS.push(call);
-    const response = await fetch(url.href, {
-      headers, method, body, signal: controller.signal,
-    });
-
     try {
+      const response = await fetch(url.href, {
+        headers, method, body, signal: controller.signal,
+      });
       if (response.ok) {
         // если HTTP-статус в диапазоне 200-299
         return await response.json();
       }
-      return { status: 'error', message: response.error };
+      if (response.status > 400 && response.status < 500) {
+        return { status: 'error', error: 'ERROR_AUTH' };
+      }
+      return { status: 'error', error: 'ERROR_SERVER' };
     } catch (error) {
-      return { status: 'error', message: error };
+      return { status: 'error', error: 'ERROR_SERVER' };
     }
   }
 
-  static async getUserData() {
+  static async getUserData(token) {
     const adress = '/reestr/api/user';
-    return API.getResponse(adress);
+    return API.getResponse(adress, token);
   }
 
-  static async getStudentData() {
+  static async getStudentData(token) {
     const adress = '/reestr/api/student';
-    return API.getResponse(adress);
+    return API.getResponse(adress, token);
   }
 
-  static async getPatientData() {
+  static async getPatientData(token) {
     const adress = '/reestr/api/patient';
-    return API.getResponse(adress);
+    return API.getResponse(adress, token);
   }
 
-  static async getMeetingsData() {
+  static async getMeetingsData(token) {
     const adress = '/reestr/api/meeting';
-    return API.getResponse(adress);
+    return API.getResponse(adress, token);
   }
 
   static async getSpecialties() {
@@ -71,59 +70,86 @@ export default class API {
     return API.getResponse(adress);
   }
 
-  static async getAlldata() {
-    const user = await API.getUserData();
-    const student = await API.getStudentData();
-    const patient = await API.getPatientData();
-    const meetings = await API.getMeetingsData();
+  static async getAlldata(token) {
+    const user = await API.getUserData(token);
+    const student = await API.getStudentData(token);
+    const patient = await API.getPatientData(token);
+    const meetings = await API.getMeetingsData(token);
+    const specialties = await API.getSpecialties();
+    if (user.status === 'error') return user;
     const state = {
       user: user.data,
       student: student.data,
       patient: patient.data,
       studentMeetings: meetings.data.student_meetings,
       patientMeetings: meetings.data.patient_meetings,
+      specialties: specialties.data,
     };
-    return state;
+    return { status: 'ok', data: state };
   }
 
-  static async updateUser(body) {
+  static async updateUser(body, token) {
     const adress = '/reestr/api/user';
     const method = 'PUT';
-    return API.getResponse(adress, method, body);
+    return API.getResponse(adress, token, method, body);
   }
 
-  static async updateMeeting(body) {
+  static async createMeeting(body, token) {
+    const adress = '/reestr/api/meeting';
+    const method = 'POST';
+    return API.getResponse(adress, token, method, body, { 'Content-Type': 'application/json' });
+  }
+
+  static async updateMeeting(body, token) {
     const adress = '/reestr/api/meeting';
     const method = 'PUT';
-    return API.getResponse(adress, method, body);
+    return API.getResponse(adress, token, method, body, { 'Content-Type': 'application/json' });
   }
 
-  static async updateStudent(body) {
+  static async updateStudent(body, token) {
     const adress = '/reestr/api/student';
     const method = 'PUT';
-    return API.getResponse(adress, method, body);
+    return API.getResponse(adress, token, method, body);
   }
 
-  // static async createPatient(body) {
-  //   // отправляем запрос на создание пациента, если все ОК, то ничего не вернется
-  //   // если ошибка, то отрисовываем их в виджете
-  //   const adress = '';
-  //   const method = 'POST';
-  //   return API.getResponse(adress, method, body);
-  // }
+  static async login(body) {
+    const adress = '/api-token-auth/';
+    const method = 'POST';
+    return API.getResponse(adress, '', method, body);
+  }
 
-  // static async getDataSearchForm() {
-  //   const url = new URL(HREF);
-  //   url.searchParams.set('format', 'JSON');
-  //   const response = await fetch(url.href);
-  //   try {
-  //     if (response.ok) {
-  //       const rowData = await response.json();
-  //       return rowData.data;
-  //     }
-  //     return {};
-  //   } catch (error) {
-  //     throw new Error(error.message);
-  //   }
-  // }
+  static async createPatient(body) {
+    // отправляем запрос на создание пациента, если все ОК, то ничего не вернется
+    // если ошибка, то отрисовываем их в виджете
+    const url = new URL(window.location.href);
+    const method = 'POST';
+    const headers = {
+      'X-CSRFToken': getCookie(),
+    };
+    const response = await fetch(url.href, { headers, method, body });
+    try {
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+      return {};
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  static async getDataSearchForm() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('format', 'JSON');
+    const response = await fetch(url.href);
+    try {
+      if (response.ok) {
+        const rowData = await response.json();
+        return rowData.data;
+      }
+      return {};
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
