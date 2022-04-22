@@ -2,7 +2,6 @@ import 'kalend/dist/styles/index.css';
 import './HomeKalendMeetings.css';
 import PropTypes from 'prop-types';
 import Kalend, { CalendarView } from 'kalend';
-import { useEffect } from 'react';
 import MeetingModel from '../../../Models/MeetingModel';
 
 export default function HomeKalendMeetings({

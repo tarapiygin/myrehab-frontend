@@ -8,7 +8,7 @@ export default function HomeStudentPatients({ setFilterMeetings }) {
   return (
     <div className='HomeStudentPatients commonFormContainer'>
       <h2>Мои пациенты</h2>
-      <ul className='HomeStudentPatients__list'>
+      <ul className='HomeStudentPatients__list row justify-content-around'>
       { patients.map((p) => <HomePatientItem key={p.id} setFilterMeetings={setFilterMeetings} patient={p}/>) }
       </ul>
     </div>

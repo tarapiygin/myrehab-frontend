@@ -1,26 +1,38 @@
 .HomePatientItem {
-  margin: 15px 0 0 0px;
+  margin: 15px 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 0.8rem 0.5rem;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-around;
+  align-items: center;
   list-style-type: none;
-  border-bottom: 1px solid #cccccc;
-  padding-bottom: 7px;
 }
 
 .HomePatientItem__field {
-  flex-basis: 25%;
-  padding: 0px 2px;
+  margin-bottom: 0.8rem;
+  width: 90%;
+  text-align: center;
+  word-wrap: break-word;
 }
 
-.HomePatientItem__meetings{
+.HomePatientItem__meetings {
   color: #007bff;
   padding: 0px 3px;
   border: 1px solid;
   text-align: center;
 }
-@media (max-width: 767px) {
-  .HomePatientItem__field {
-    flex-basis: 50%;
-  }
+
+.HomePatientItem__avatar {
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  border-radius: 50%;
 }
+.HomePatientItem__button{
+  max-width: 200px;
+}
+
+@media (max-width: 767px) {}
