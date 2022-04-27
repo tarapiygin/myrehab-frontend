@@ -20,7 +20,7 @@ export default function Modal({
     }
   });
   return (
-  <div className='modal fade' tabIndex="-1" role="dialog" ref={container} >
+  <div className='modal fade' tabIndex="-1" role="dialog" ref={container} style={({ overflow: 'auto' })} >
     <div className="modal-dialog">
       <div className="modal-content">
         <div className="modal-header">

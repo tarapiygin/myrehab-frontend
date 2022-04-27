@@ -10,11 +10,12 @@ export default function HomeMeetingFormAdd({ student, onClose }) {
   const dispath = useDispatch();
   const [state, setState] = useState({
     meeting: {
-      date_of_appointment: new Date().toJSON(),
+      date_of_appointment: null,
       disease: '',
     },
     patient: {
       user: {
+        email: '',
         first_name: '',
         last_name: '',
         middle_name: '',
@@ -32,10 +33,17 @@ export default function HomeMeetingFormAdd({ student, onClose }) {
   };
 
   const onChangeEmail = (value) => {
-    setState((prev) => ((
-      { ...prev, patient: { ...prev.patient, user: { ...prev.patient.user, email: value } } }
-    )));
     const patients = student.patients.filter((p) => p.user.email.includes(value));
+    if (patients !== null && patients.length === 1) {
+      const patient = { ...patients[0] };
+      setState((prev) => ((
+        { ...prev, patient }
+      )));
+    } else {
+      setState((prev) => ((
+        { ...prev, patient: { ...prev.patient, user: { ...prev.patient.user, email: value } } }
+      )));
+    }
     setFilterPatients(patients);
   };
 
@@ -52,17 +60,10 @@ export default function HomeMeetingFormAdd({ student, onClose }) {
     };
   });
 
-  const onChangePhone = (value) => setState((prev) => (({
+  const onChangeUserField = (value, name) => setState((prev) => (({
     ...prev,
     patient: {
-      ...prev.patient, user: { ...prev.patient.user, phone: value },
-    },
-  })));
-
-  const onChangeCity = (value) => setState((prev) => (({
-    ...prev,
-    patient: {
-      ...prev.patient, user: { ...prev.patient.user, city: value },
+      ...prev.patient, user: { ...prev.patient.user, [name]: value },
     },
   })));
 
@@ -74,7 +75,7 @@ export default function HomeMeetingFormAdd({ student, onClose }) {
   const onChangeDateOfAppointment = (dates) => {
     setState((prev) => (({
       ...prev,
-      meeting: { ...prev.meeting, date_of_appointment: new Date(dates[0]).toJSON() },
+      meeting: { ...prev.meeting, date_of_appointment: dates[0].toJSON() },
     })));
   };
 
@@ -97,7 +98,7 @@ export default function HomeMeetingFormAdd({ student, onClose }) {
       extendedClasses=''/>
 
       <InputFormGroup
-      onChangeHook={onChangePhone}
+      onChangeHook={onChangeUserField}
       name={'phone'}
       label='Телефон'
       prompts={filterPatients.filter((p) => p.user.phone).map((p) => p.user.phone)}
@@ -105,7 +106,7 @@ export default function HomeMeetingFormAdd({ student, onClose }) {
       extendedClasses=''/>
 
       <InputFormGroup
-      onChangeHook={onChangeCity}
+      onChangeHook={onChangeUserField}
       name={'city'}
       label='Город'
       prompts={filterPatients.filter((p) => p.user.city).map((p) => p.user.city)}

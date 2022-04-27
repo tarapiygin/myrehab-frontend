@@ -29,7 +29,7 @@ export default function HomeStudentMeetingFormEdit({
 
   const onChangeDateOfAppointment = (dates) => {
     setDatePicker(dates[0]);
-    setState((prev) => ({ ...prev, date_of_appointment: new Date(dates[0]).toJSON }));
+    setState((prev) => ({ ...prev, date_of_appointment: dates[0].toJSON() }));
   };
 
   const onChangeField = (value, name) => {
