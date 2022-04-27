@@ -4,6 +4,9 @@ import { updateStudent } from '../../../Store/actionCreators';
 import InputFormGroup from '../../Base/InputFormGroup/InputFormGroup';
 import TextAreaFormGroup from '../../Base/TextAreaFormGroup/TextAreaFormGroup';
 import SelectFormGroup from '../../Base/SelectFormGroup/SelectFormGroup';
+import { ORIGIN } from '../../../API';
+import ShareButtons from '../../Base/ShareButtons/ShareButtons';
+import styles from './HomeStudentForm.module.css';
 
 export default function HomeStudentForm() {
   const student = useSelector((state) => state.data.student);
@@ -17,10 +20,15 @@ export default function HomeStudentForm() {
     const formData = new FormData(formRef.current);
     dispath(updateStudent(formData));
   };
-
   return (
     <div className="HomeStudentForm commonFormContainer">
       <h2 className="HomeStudentForm__title">Профиль специалиста</h2>
+      <div className={styles.shareButtons}>
+        <p className={styles.profileLink}>
+          Ваш профиль: <a target='_blank' href={ORIGIN + student.url} rel="noreferrer">{ORIGIN + student.url}</a></p>
+        <p>Поделитесь Вашим профилем</p>
+        <ShareButtons url={ORIGIN + student.url}/>
+      </div>
       <form onSubmit={onSubmitForm} ref={formRef}>
         <div className="row" >
           <InputFormGroup name='work_place' label='Место работы' initValue={student.work_place}/>
