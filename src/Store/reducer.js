@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   loadStatus: 'INIT',
-  activeComponent: 'USER',
+  activeComponent: null,
   editableStudentMeeting: null,
   editablePatientMeeting: null,
   token: null,
