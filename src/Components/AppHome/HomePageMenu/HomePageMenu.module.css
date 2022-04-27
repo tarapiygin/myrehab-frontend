@@ -1,4 +1,4 @@
-.HomePageMenu {
+.menu {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -6,7 +6,7 @@
   padding: 10px 40px;
 }
 
-.HomePageMenu__toggle {
+.toggle {
   background-color: #ffffff;
   box-shadow: 0 6px 20px rgb(0 0 0 / 10%);
   box-sizing: border-box;
@@ -17,19 +17,19 @@
   text-decoration: none;
 }
 
-.HomePageMenu__toggle:focus, .HomePageMenu__toggle:active, .HomePageMenu__toggle:hover {
+.toggle:focus, .toggle:active, .toggle:hover {
   color: #7047c3;
   border: 1px solid #7047c3;
 }
 
-.HomePageMenu__toggle--active {
+.toggleActive {
   background-color: #7047c3 !important;
   color: #ffffff !important;
 }
 
 
 @media (max-width: 767px) {
-  .HomePageMenu {
+  .menu {
     overflow-x: auto;
     width: 100%;
     position: relative;
@@ -44,11 +44,11 @@
     scrollbar-color: red;
   }
 
-  .HomePageMenu::-webkit-scrollbar {
+  .menu::-webkit-scrollbar {
     display: none;
   }
 
-  .HomePageMenu__toggle {
+  .toggle {
     white-space: nowrap;
     margin: 0;
     box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 10%);
@@ -56,11 +56,11 @@
     margin-right: 7px;
   }
 
-  .HomePageMenu__toggle:first-child {
+  .toggle:first-child {
     margin-left: 14px;
   }
 
-  .HomePageMenu__toggle:last-child {
+  .toggle:last-child {
     margin-right: 14px;
   }
 }

@@ -1,4 +1,4 @@
-.home {
+.HomePage {
   background-color: #f6f8f9;
   box-sizing: border-box;
   padding-bottom: 150px;
@@ -6,12 +6,12 @@
   min-height: 100vh;
 }
 
-.HomePage {
+.body {
   max-width: 980px;
   margin-right: auto;
   margin-left: auto;
 }
 
-.HomePage__title{
+.title{
   text-align: center;
 }

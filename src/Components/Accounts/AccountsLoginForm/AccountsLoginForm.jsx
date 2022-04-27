@@ -1,5 +1,5 @@
-import './AccountsLoginForm.css';
 import { useRef, useState } from 'react';
+import styles from './AccountsLoginForm.module.css';
 import InputFormGroup from '../../Base/InputFormGroup/InputFormGroup';
 import API from '../../../API';
 
@@ -20,13 +20,13 @@ export default function AccountsLoginForm({ onLoginSuccess }) {
   };
 
   return (
-    <div className="AccountsLoginForm commonFormContainer">
-      <h1 className="HomeUserContainer__title">Пожалуйста, авторизуйтесь</h1>
+    <div className={`commonFormContainer ${styles.AccountsLoginForm}`} >
+      <h1>Пожалуйста, авторизуйтесь</h1>
       <form className="row" onSubmit={onSubmitForm} ref={formRef}>
         {error && <p className="alert alert-danger" role="alert">{error}</p>}
         <InputFormGroup name='username' extendedClasses='col-12' label='Эл. адрес' type='email' onChangeHook={onChangeForm}/>
         <InputFormGroup name='password' extendedClasses='col-12' label='Пароль' type='password' onChangeHook={onChangeForm}/>
-        <button className="btn btn-outline-success mx-auto btn-lg AccountsLoginForm__button mt-2" type="submit">Войти</button>
+        <button className={`btn btn-outline-success mx-auto btn-lg mt-2 ${styles.loginButton}`} type="submit">Войти</button>
       </form>
     </div>
   );

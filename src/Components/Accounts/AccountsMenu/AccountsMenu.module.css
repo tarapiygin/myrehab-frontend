@@ -6,13 +6,13 @@
   top: 0;
 }
 
-.AccountsMenu__link {
+.menuLink {
   margin-right: 10px;
   padding: 2px;
   text-align: center;
 }
 
-.AccountsMenu__link:last-child {
+.menuLink:last-child {
   margin-right: 0;
 }
 

@@ -1,0 +1,6 @@
+/* отключение кнопки в календаре */
+@media (max-width: 992px) {
+  .Kalend__ButtonIcon__container:nth-child(3) {
+    display: none;
+  }
+}

@@ -12,7 +12,7 @@ import { setEditableStudentMeeting } from '../../../Store/actionCreators';
 
 export default function HomeStudentMeetings({ setFilterMeetings, filter }) {
   const editableMeeting = useSelector((state) => state.editableStudentMeeting);
-  const studentMeetings = useSelector((state) => state.data.studentMeetings);
+  const studentMeetings = useSelector((state) => state.data.student.meetings);
   const student = useSelector((state) => state.data.student);
   const dispath = useDispatch();
   const [createMeeting, setCreateMeetingForm] = useState(false);

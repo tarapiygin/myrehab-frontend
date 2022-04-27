@@ -1,6 +1,6 @@
 import 'kalend/dist/styles/index.css';
-import './HomeKalendMeetings.css';
 import Kalend, { CalendarView } from 'kalend';
+import styles from './HomeKalendMeetings.module.css';
 
 export default function HomeKalendMeetings({
   meetings, onNewEventClick, onEventClick, createMeetingButton,
@@ -40,15 +40,15 @@ export default function HomeKalendMeetings({
 
   return (
     <div>
-  <h5 className='HomeKalendMeetings__statusesTitle'>Статусы записей:</h5>
-  <ul className='HomeKalendMeetings__statuses'>
-    <li className='HomeKalendMeetings__statuses__item statusColor--approval'>Подтвержден</li>
-    <li className='HomeKalendMeetings__statuses__item statusColor--pending'>На рассмотрении</li>
-    <li className='HomeKalendMeetings__statuses__item statusColor--took_place'>Состоялся</li>
-    <li className='HomeKalendMeetings__statuses__item statusColor--rejected'>Отклонен</li>
+  <h5 className={styles.StatusesTitle}>Статусы записей:</h5>
+  <ul className={styles.Statuses}>
+    <li className={`${styles.StatusItem} statusColor--approval`}>Подтвержден</li>
+    <li className={`${styles.StatusItem} statusColor--pending`}>На рассмотрении</li>
+    <li className={`${styles.StatusItem} statusColor--took_place`}>Состоялся</li>
+    <li className={`${styles.StatusItem} statusColor--rejected`}>Отклонен</li>
   </ul>
 
-  <div className="Calendar__wrapper">
+  <div className={styles.CalendarWrapper}>
   {createMeetingButton}
   <Kalend
     onEventClick={onKalendEventClick}
@@ -59,11 +59,6 @@ export default function HomeKalendMeetings({
     timeFormat={'24'}
     weekDayStart={'Monday'}
     language={'ru'}
-    // draggingDisabledConditions={{
-    //   summary: 'Computers',
-    //   allDay: true,
-    //   color: 'pink',
-    // }}
     isNewEventOpen={true}
   />
 </div>

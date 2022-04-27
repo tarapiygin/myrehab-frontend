@@ -34,12 +34,12 @@ export default function reducer(state = initialState, action) {
     case SET_EDITABLE_STUDENT_MEETING:
       return {
         ...state,
-        editableStudentMeeting: state.data.studentMeetings.find((m) => m.id === action.payload),
+        editableStudentMeeting: state.data.student.meetings.find((m) => m.id === action.payload),
       };
     case SET_EDITABLE_PATIENT_MEETING:
       return {
         ...state,
-        editablePatientMeeting: state.data.patientMeetings.find((m) => m.id === action.payload),
+        editablePatientMeeting: state.data.patient.meetings.find((m) => m.id === action.payload),
       };
     case UPDATE_TOKEN_SUCCESS:
       return { ...state, token: action.payload };
@@ -68,17 +68,17 @@ export default function reducer(state = initialState, action) {
         ...state, data: { ...state.data, patient: { ...state.data.patient, ...action.payload } },
       };
     case ADD_STUDENT_MEETING_SUCCESS:
-      const addStudentMeetings = state.data.studentMeetings.map((m) => m);
+      const addStudentMeetings = state.data.student.meetings.map((m) => m);
       addStudentMeetings.push(action.payload);
       return {
         ...state,
         data: {
           ...state.data,
-          studentMeetings: addStudentMeetings,
+          student: { ...state.data.student, meetings: addStudentMeetings },
         },
       };
     case UPDATE_STUDENT_MEETING_SUCCESS:
-      const updateStudentMeetings = state.data.studentMeetings.map((m) => {
+      const updateStudentMeetings = state.data.student.meetings.map((m) => {
         if (m.id === action.payload.id) return action.payload;
         return m;
       });
@@ -86,11 +86,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         data: {
           ...state.data,
-          studentMeetings: updateStudentMeetings,
+          student: { ...state.data.student, meetings: updateStudentMeetings },
         },
       };
     case UPDATE_PATIENT_MEETING_SUCCESS:
-      const updatePatientMeetings = state.data.patientMeetings.map((m) => {
+      const updatePatientMeetings = state.data.patient.meetings.map((m) => {
         if (m.id === action.payload.id) return action.payload;
         return m;
       });
@@ -98,7 +98,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         data: {
           ...state.data,
-          patientMeetings: updatePatientMeetings,
+          patient: { ...state.data.patient, meetings: updatePatientMeetings },
         },
       };
     case SHOW_NOTICE_MESSAGE:

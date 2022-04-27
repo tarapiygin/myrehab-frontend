@@ -4,7 +4,7 @@
   margin-right: auto;
 }
 
-.AccountsLoginForm__button {
+.loginButton {
   width: 100%;
   max-width: 150px;
 }

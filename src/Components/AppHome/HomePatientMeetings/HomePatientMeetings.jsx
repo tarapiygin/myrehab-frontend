@@ -7,7 +7,7 @@ import { setEditablePatientMeeting } from '../../../Store/actionCreators';
 
 export default function HomePatientMeetings() {
   const editableMeeting = useSelector((state) => state.editablePatientMeeting);
-  const meetings = useSelector((state) => state.data.patientMeetings);
+  const meetings = useSelector((state) => state.data.patient.meetings);
   const dispath = useDispatch();
 
   const onEventClick = (id) => dispath(setEditablePatientMeeting(id));

@@ -154,8 +154,8 @@ export default function HomeStudentMeetingFormEdit({
         value={datePicker}
       />
     </div>}
-    {!checkStatuses() && <p>
-      Назначенное время: {dt.fromISO(meetingData.date_of_appointment).toFormat('dd.MM.yyyy в HH:mm')}</p>}
+    {!checkStatuses() && <p>Дата: {meetingData.date_of_appointment
+      ? dt.fromISO(meetingData.date_of_appointment).toFormat('dd.MM.yyyy в HH:mm') : 'Не назначена'}</p>}
 
     {checkStatuses() && <TextAreaFormGroup name='anamnesis' label='Анамнез' requred={false} extendedClasses=''
     initValue={meetingData.anamnesis}

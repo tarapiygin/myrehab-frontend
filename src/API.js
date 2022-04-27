@@ -60,30 +60,22 @@ export default class API {
     return API.getResponse(adress, token);
   }
 
-  static async getMeetingsData(token) {
-    const adress = '/reestr/api/meeting';
-    return API.getResponse(adress, token);
-  }
-
   static async getSpecialties() {
     const adress = '/reestr/api/specialty';
     return API.getResponse(adress);
   }
 
   static async getAlldata(token) {
-    const user = await API.getUserData(token);
-    const student = await API.getStudentData(token);
-    const patient = await API.getPatientData(token);
-    const meetings = await API.getMeetingsData(token);
-    const specialties = await API.getSpecialties();
-    if (user.status === 'error') return user;
+    const userResp = await API.getUserData(token);
+    const studentResp = await API.getStudentData(token);
+    const patientResp = await API.getPatientData(token);
+    const specialtiesResp = await API.getSpecialties();
+    if (userResp.status === 'error') return userResp;
     const state = {
-      user: user.data,
-      student: student.data,
-      patient: patient.data,
-      studentMeetings: meetings.data.student_meetings,
-      patientMeetings: meetings.data.patient_meetings,
-      specialties: specialties.data,
+      user: userResp.data,
+      student: studentResp.data,
+      patient: patientResp.data,
+      specialties: specialtiesResp.data,
     };
     return { status: 'ok', data: state };
   }

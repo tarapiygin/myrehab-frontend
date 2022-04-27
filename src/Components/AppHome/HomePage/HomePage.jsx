@@ -1,4 +1,3 @@
-import './HomePage.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HomePatientMeetings from '../HomePatientMeetings/HomePatientMeetings';
@@ -8,6 +7,8 @@ import HomeUserForm from '../HomeUserForm/HomeUserForm';
 import HomePageMenu from '../HomePageMenu/HomePageMenu';
 import HomeStudentPatients from '../HomeStudentPatients/HomeStudentPatients';
 import { setActiveComponent } from '../../../Store/actionCreators';
+
+import styles from './HomePage.module.css';
 
 export default function HomePage() {
   const activeComponent = useSelector((state) => state.activeComponent);
@@ -25,9 +26,9 @@ export default function HomePage() {
   };
 
   return (
-    <div className='home'>
-      <div className='HomePage'>
-        <h1 className='HomePage__title'>Личный кабинет</h1>
+    <div className={styles.HomePage}>
+      <div className={styles.body}>
+        <h1 className={styles.title}>Личный кабинет</h1>
 
         <HomePageMenu/>
         <div className='container'>

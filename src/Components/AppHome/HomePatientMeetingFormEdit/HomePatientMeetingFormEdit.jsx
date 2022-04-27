@@ -52,7 +52,7 @@ export default function HomePatientMeetingFormEdit({
     <p>Жалоба: {meetingData.disease === '' ? 'Не указана' : meetingData.disease}</p>
     <p>Текущий статус: <span className={`HomeMeetingFormEdit__Status statusColor--${meetingData.status}`}>{STATUSES[meetingData.status]}</span></p>
     <p>Дата: {meetingData.date_of_appointment
-      ? dt.fromISO(meetingData.date_of_appointment).toFormat('dd.MM.yyyy в HH:mm') : 'Еще не назначена...'}</p>
+      ? dt.fromISO(meetingData.date_of_appointment).toFormat('dd.MM.yyyy в HH:mm') : 'Не назначена'}</p>
     <p>Адресс приема: {meetingData.address
       ? meetingData.address : meetingData.student.work_place}</p>
 
