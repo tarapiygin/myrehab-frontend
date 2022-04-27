@@ -11,8 +11,8 @@ export default function HomePageMenu() {
 
   useEffect(() => {
     if (activeComponent === null) {
-      if (patient) dispatch(setActiveComponent('PATIENT_MEETINGS'));
-      else dispatch(setActiveComponent('STUDENT_MEETINGS'));
+      if (student) dispatch(setActiveComponent('STUDENT_MEETINGS'));
+      else dispatch(setActiveComponent('PATIENT_MEETINGS'));
     }
   });
   const onClickButton = (e) => dispatch(setActiveComponent(e.target.dataset.type));
@@ -34,11 +34,11 @@ export default function HomePageMenu() {
       {student && <button onClick={onClickButton}
       data-type='STUDENT'
       className={`btn HomePageMenu__toggle ${activeComponent === 'STUDENT' ? 'HomePageMenu__toggle--active' : ''}`}
-      type="button">Профиль специалиста</button>}
+      type="button">Рабочий профиль</button>}
       {student && <button onClick={onClickButton}
       data-type='STUDENT_PATIENTS'
       className={`btn HomePageMenu__toggle ${activeComponent === 'STUDENT_PATIENTS' ? 'HomePageMenu__toggle--active' : ''}`}
-      type="button">Мои пациенты</button>}
+      type="button">Пациенты</button>}
     </div>
   );
 }
