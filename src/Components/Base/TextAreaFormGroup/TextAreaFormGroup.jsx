@@ -14,7 +14,7 @@ export default function TextAreaFormGroup({
 
   const onValueChange = (e) => {
     setValue(e.target.value);
-    if (onChangeHook) onChangeHook(e.target.value);
+    if (onChangeHook) onChangeHook(e.target.value, name);
   };
   return (
   <div className={`${extendedClasses} form-group`}>

@@ -32,8 +32,8 @@ export default function HomeStudentMeetingFormEdit({
     setState((prev) => ({ ...prev, date_of_appointment: new Date(dates[0]).toJSON }));
   };
 
-  const onChangeAddress = (value) => {
-    setState((prev) => ({ ...prev, address: value }));
+  const onChangeField = (value, name) => {
+    setState((prev) => ({ ...prev, [name]: value }));
   };
 
   const onSubmitForm = async (e) => {
@@ -157,9 +157,23 @@ export default function HomeStudentMeetingFormEdit({
     {!checkStatuses() && <p>
       Назначенное время: {dt.fromISO(meetingData.date_of_appointment).toFormat('dd.MM.yyyy в HH:mm')}</p>}
 
+    {checkStatuses() && <TextAreaFormGroup name='anamnesis' label='Анамнез' requred={false} extendedClasses=''
+    initValue={meetingData.anamnesis}
+    onChangeHook={onChangeField}/>}
+
+    {!checkStatuses() && <p>
+      Анамнез: {meetingData.anamnesis}</p>}
+
+      {checkStatuses() && <TextAreaFormGroup name='prescription' label='Назачения' requred={false} extendedClasses=''
+    initValue={meetingData.prescription}
+    onChangeHook={onChangeField}/>}
+
+    {!checkStatuses() && <p>
+      Назачения: {meetingData.anamnesis}</p>}
+
     {checkStatuses() && <TextAreaFormGroup name='address' label='Адресс места приема' requred={false} extendedClasses=''
     initValue={meetingData.address ? meetingData.address : meetingData.student.work_place}
-    onChangeHook={onChangeAddress}/>}
+    onChangeHook={onChangeField}/>}
 
     <div className='row justify-content-around'>
     {checkStatuses() && <button type='submit' className='btn btn-outline-success col-5 HomeMeetingFormEdit__button'>Сохранить</button>}

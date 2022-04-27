@@ -24,7 +24,7 @@ export default function InputFormGroup({
   const onClickPrompt = (newValue) => {
     setValue(newValue);
     setShowPrompts(false);
-    if (onChangeHook) onChangeHook(newValue);
+    if (onChangeHook) onChangeHook(newValue, name);
   };
 
   const onClickInput = () => {
