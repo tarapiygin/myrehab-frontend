@@ -1,8 +1,6 @@
 import 'kalend/dist/styles/index.css';
 import './HomeKalendMeetings.css';
-import PropTypes from 'prop-types';
 import Kalend, { CalendarView } from 'kalend';
-import MeetingModel from '../../../Models/MeetingModel';
 
 export default function HomeKalendMeetings({
   meetings, onNewEventClick, onEventClick, createMeetingButton,
@@ -71,8 +69,3 @@ export default function HomeKalendMeetings({
 </div>
 </div>);
 }
-
-HomeKalendMeetings.propTypes = {
-  meetings: PropTypes.arrayOf(PropTypes.exact(MeetingModel)),
-  onEventClick: PropTypes.func,
-};
